@@ -67,17 +67,17 @@ export default function Navigation() {
         <div className="flex items-center gap-2 sm:gap-3">
           <a
             href="tel:07754673917"
-            className="inline-flex items-center gap-2 rounded-2xl bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-md shadow-green-500/30 transition-all hover:bg-green-600 sm:px-5 sm:py-2.5"
+            className="inline-flex min-h-[40px] items-center gap-2 rounded-2xl bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-md shadow-green-500/30 transition-all hover:bg-green-600 sm:min-h-[44px] sm:px-5 sm:py-2.5"
             aria-label="Call Grow, Mow and Go on 07754 673917"
           >
-            <Phone className="h-4 w-4" />
-            <span className="hidden xs:inline sm:inline">07754 673917</span>
-            <span className="xs:hidden sm:hidden">Call</span>
+            <Phone className="h-4 w-4 shrink-0" />
+            <span className="hidden sm:inline">07754 673917</span>
+            <span className="sm:hidden">Call</span>
           </a>
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="rounded-xl p-2 text-emerald-800 lg:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-xl text-emerald-800 active:bg-emerald-50 lg:hidden"
             aria-label="Toggle menu"
             aria-expanded={open}
           >

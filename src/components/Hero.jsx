@@ -46,7 +46,7 @@ function DefaultHero() {
         </div>
 
         {/* Headline */}
-        <h1 className="font-display text-4xl font-extrabold leading-[1.05] text-emerald-900 sm:text-5xl md:text-6xl lg:text-7xl">
+        <h1 className="font-display text-[2rem] xs:text-4xl font-extrabold leading-[1.08] text-emerald-900 sm:text-5xl md:text-6xl lg:text-7xl">
           Lawn Care Made Simple.
           <br />
           <span className="bg-gradient-to-r from-green-500 to-emerald-700 bg-clip-text text-transparent">
@@ -55,24 +55,24 @@ function DefaultHero() {
         </h1>
 
         {/* Sub-headline */}
-        <p className="mx-auto mt-6 max-w-2xl text-base text-gray-600 sm:text-lg md:text-xl">
+        <p className="mx-auto mt-5 max-w-2xl text-sm text-gray-600 xs:text-base sm:mt-6 sm:text-lg md:text-xl">
           Expert lawn cutting and garden maintenance across Fontwell,
           Walberton, Arundel, and surrounding areas. Professional, reliable,
           and reasonably priced.
         </p>
 
-        {/* Star rating badge */}
+        {/* Star rating badge — wraps gracefully on narrow screens */}
         <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5, delay: 0.25 }}
-          className="mx-auto mt-8 inline-flex items-center gap-3 rounded-2xl border border-amber-200 bg-white px-5 py-3 shadow-sm"
+          className="mx-auto mt-8 inline-flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-1 rounded-2xl border border-amber-200 bg-white px-4 py-2.5 shadow-sm sm:px-5 sm:py-3"
         >
           <div className="flex">
             {[0, 1, 2, 3, 4].map((i) => (
               <Star
                 key={i}
-                className="h-5 w-5 fill-amber-400 text-amber-400"
+                className="h-4 w-4 fill-amber-400 text-amber-400 sm:h-5 sm:w-5"
                 strokeWidth={1.5}
               />
             ))}
@@ -80,8 +80,8 @@ function DefaultHero() {
           <span className="text-sm font-semibold text-gray-900">
             5.0 Rating
           </span>
-          <span className="text-sm text-gray-500">·</span>
-          <span className="text-sm text-gray-600">
+          <span className="hidden text-sm text-gray-500 sm:inline">·</span>
+          <span className="text-xs text-gray-600 sm:text-sm">
             Based on 3 Google Reviews
           </span>
         </motion.div>

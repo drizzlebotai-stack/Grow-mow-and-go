@@ -138,6 +138,7 @@ export default function Contact() {
                 <Field
                   label="Your name"
                   type="text"
+                  autoComplete="name"
                   value={form.name}
                   onChange={update('name')}
                   required
@@ -145,6 +146,8 @@ export default function Contact() {
                 <Field
                   label="Phone"
                   type="tel"
+                  inputMode="tel"
+                  autoComplete="tel"
                   value={form.phone}
                   onChange={update('phone')}
                   required
@@ -152,6 +155,9 @@ export default function Contact() {
                 <Field
                   label="Postcode"
                   type="text"
+                  inputMode="text"
+                  autoComplete="postal-code"
+                  autoCapitalize="characters"
                   value={form.postcode}
                   onChange={update('postcode')}
                 />
@@ -162,7 +168,7 @@ export default function Contact() {
                   <select
                     value={form.service}
                     onChange={update('service')}
-                    className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+                    className="mt-1.5 min-h-[48px] w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-base shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
                   >
                     <option>Lawn Mowing</option>
                     <option>Garden Maintenance</option>
@@ -182,7 +188,7 @@ export default function Contact() {
                   value={form.message}
                   onChange={update('message')}
                   placeholder="Approximate size, access, anything we should know…"
-                  className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+                  className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-base shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
                 />
               </div>
 
@@ -214,7 +220,7 @@ function Field({ label, ...props }) {
       <label className="text-sm font-semibold text-gray-700">{label}</label>
       <input
         {...props}
-        className="mt-1.5 w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
+        className="mt-1.5 min-h-[48px] w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-base shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-200"
       />
     </div>
   );
