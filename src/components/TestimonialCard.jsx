@@ -24,7 +24,7 @@ export default function TestimonialCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, delay, ease: 'easeOut' }}
-      className="relative flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-lg sm:p-8"
+      className="relative flex h-full flex-col rounded-2xl border border-gray-100 bg-white p-7 shadow-sm transition-shadow hover:shadow-lg sm:p-8"
     >
       <Quote
         aria-hidden="true"

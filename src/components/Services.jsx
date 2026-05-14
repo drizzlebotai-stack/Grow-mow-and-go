@@ -70,10 +70,10 @@ export default function Services() {
               <div className="mb-5 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-700 to-emerald-900 text-white shadow-md shadow-emerald-900/20">
                 <s.icon className="h-6 w-6" />
               </div>
-              <h3 className="font-display text-lg font-bold text-emerald-900">
+              <h3 className="font-display text-xl font-bold text-emerald-900 md:text-lg">
                 {s.title}
               </h3>
-              <p className="mt-2 flex-1 text-sm text-gray-600">{s.body}</p>
+              <p className="mt-3 flex-1 text-base leading-relaxed text-gray-600 md:mt-2 md:text-sm md:leading-normal">{s.body}</p>
               <a
                 href="#contact"
                 className="mt-5 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-green-600 transition-colors group-hover:text-emerald-800"

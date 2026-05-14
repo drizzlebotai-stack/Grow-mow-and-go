@@ -105,13 +105,43 @@ export default function Gallery() {
           </p>
         </motion.div>
 
-        {/* Uniform grid — every tile is a 4:3 rectangle */}
-        <div className="mt-10 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-2 lg:grid-cols-3">
+        {/* Mobile: horizontal swipe carousel (saves vertical space) */}
+        <div className="mt-10 md:hidden">
+          <div className="scrollbar-hide -mx-4 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4">
+            {galleryItems.map((item, i) => (
+              <div
+                key={`m-${item.type}-${i}`}
+                className="w-[82vw] flex-shrink-0 snap-center"
+              >
+                {item.type === 'pair' ? (
+                  <BeforeAfterSlider
+                    before={item.before}
+                    after={item.after}
+                    label={item.label}
+                  />
+                ) : (
+                  <SingleTile
+                    item={item}
+                    index={i}
+                    onOpen={() => setActiveIndex(lightboxIndexOf(i))}
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+          {/* Swipe affordance */}
+          <p className="mt-2 text-center text-xs text-gray-500">
+            Swipe to see more →
+          </p>
+        </div>
+
+        {/* Desktop: uniform 4:3 grid */}
+        <div className="mt-12 hidden gap-5 md:grid md:grid-cols-2 lg:grid-cols-3">
           {galleryItems.map((item, i) => {
             if (item.type === 'pair') {
               return (
                 <motion.div
-                  key={`pair-${i}`}
+                  key={`d-pair-${i}`}
                   initial={{ opacity: 0, y: 24 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: '-60px' }}
@@ -127,7 +157,7 @@ export default function Gallery() {
             }
             return (
               <SingleTile
-                key={item.src}
+                key={`d-${item.src}`}
                 item={item}
                 index={i}
                 onOpen={() => setActiveIndex(lightboxIndexOf(i))}
@@ -135,6 +165,11 @@ export default function Gallery() {
             );
           })}
         </div>
+
+        {/* Desktop hint */}
+        <p className="mt-6 hidden text-center text-sm text-gray-500 md:block">
+          Tap any photo to view full size.
+        </p>
 
         {/* Soft CTA below gallery */}
         <motion.div

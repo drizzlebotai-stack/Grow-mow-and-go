@@ -79,7 +79,7 @@ export default function About() {
               <h3 className="mt-4 font-display text-lg font-bold text-emerald-900">
                 {p.title}
               </h3>
-              <p className="mt-2 text-sm text-gray-600">{p.body}</p>
+              <p className="mt-2 text-base leading-relaxed text-gray-600 md:text-sm md:leading-normal">{p.body}</p>
             </motion.div>
           ))}
         </div>

@@ -54,8 +54,8 @@ function DefaultHero() {
           </span>
         </h1>
 
-        {/* Sub-headline */}
-        <p className="mx-auto mt-5 max-w-2xl text-sm text-gray-600 xs:text-base sm:mt-6 sm:text-lg md:text-xl">
+        {/* Sub-headline — text-base on mobile, original sizing on desktop */}
+        <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-gray-600 sm:mt-6 sm:text-lg sm:leading-normal md:text-xl">
           Expert lawn cutting and garden maintenance across Fontwell,
           Walberton, Arundel, and surrounding areas. Professional, reliable,
           and reasonably priced.
@@ -86,7 +86,7 @@ function DefaultHero() {
           </span>
         </motion.div>
 
-        {/* CTAs — full width stacked on mobile, side-by-side on desktop */}
+        {/* CTAs — full width stacked on mobile, side-by-side centred on desktop */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -119,12 +119,12 @@ function DefaultHero() {
           </a>
         </motion.div>
 
-        {/* Benefits row */}
+        {/* Benefits row — text-base on mobile, original text-sm on desktop */}
         <motion.ul
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.5 }}
-          className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-gray-600"
+          className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-base text-gray-600 md:text-sm"
         >
           <li className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-green-500" />
