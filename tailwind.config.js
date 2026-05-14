@@ -4,11 +4,6 @@ export default {
     "./index.html",
     "./src/**/*.{js,jsx,ts,tsx}",
   ],
-  future: {
-    // Critical for mobile UX: only fire `hover:` on devices that truly support hover
-    // (i.e. mouse/trackpad). Touch devices won't get stuck in a "stuck hover" state.
-    hoverOnlyWhenSupported: true,
-  },
   theme: {
     extend: {
       screens: {

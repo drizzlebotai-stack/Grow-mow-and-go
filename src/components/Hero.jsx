@@ -110,7 +110,7 @@ function DefaultHero() {
             <ArrowRight className="h-5 w-5" />
           </motion.a>
           <a
-            href="tel:+447754673917"
+            href="tel:07754673917"
             className="btn-secondary w-full md:w-auto"
             aria-label="Call 07754 673917"
           >

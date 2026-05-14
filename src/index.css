@@ -56,22 +56,6 @@
   }
 }
 
-/* iOS safe-area insets — push fixed bottom bar above the home indicator */
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-.pt-safe {
-  padding-top: env(safe-area-inset-top);
-}
-
-/* Hide native scrollbar but keep scroll behavior — used by mobile gallery carousel */
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
 
 /* Hero background pattern */
 .hero-grain {

@@ -49,7 +49,7 @@ export default function Contact() {
 
           <div className="mt-8 space-y-4">
             <a
-              href="tel:+447754673917"
+              href="tel:07754673917"
               className="group flex items-center gap-4 rounded-2xl border border-emerald-100 bg-white p-4 transition-shadow hover:shadow-md"
             >
               <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-green-500 text-white">
@@ -117,7 +117,7 @@ export default function Contact() {
                 Your email client should have opened with the details. If not,
                 give us a quick call on{' '}
                 <a
-                  href="tel:+447754673917"
+                  href="tel:07754673917"
                   className="font-semibold text-green-600"
                 >
                   07754 673917
@@ -138,7 +138,6 @@ export default function Contact() {
                 <Field
                   label="Your name"
                   type="text"
-                  autoComplete="name"
                   value={form.name}
                   onChange={update('name')}
                   required
@@ -146,8 +145,6 @@ export default function Contact() {
                 <Field
                   label="Phone"
                   type="tel"
-                  inputMode="tel"
-                  autoComplete="tel"
                   value={form.phone}
                   onChange={update('phone')}
                   required
@@ -155,9 +152,6 @@ export default function Contact() {
                 <Field
                   label="Postcode"
                   type="text"
-                  inputMode="text"
-                  autoComplete="postal-code"
-                  autoCapitalize="characters"
                   value={form.postcode}
                   onChange={update('postcode')}
                 />
@@ -200,7 +194,7 @@ export default function Contact() {
               <p className="mt-3 text-center text-xs text-gray-500">
                 Or call us directly on{' '}
                 <a
-                  href="tel:+447754673917"
+                  href="tel:07754673917"
                   className="font-semibold text-emerald-800"
                 >
                   07754 673917
