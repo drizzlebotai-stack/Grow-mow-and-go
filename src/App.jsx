@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation.jsx';
 import Footer from './components/Footer.jsx';
+import FloatingCTA from './components/FloatingCTA.jsx';
 import Home from './pages/Home.jsx';
 
 export default function App() {
@@ -15,6 +16,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+      <FloatingCTA />
     </div>
   );
 }
