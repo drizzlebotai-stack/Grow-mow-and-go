@@ -1,56 +1,66 @@
 import { useCallback, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Camera, ZoomIn } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Camera, ZoomIn, ArrowRight } from 'lucide-react';
+import BeforeAfterSlider from './BeforeAfterSlider.jsx';
 
 /**
- * Gallery — recent work showcase.
+ * Gallery — recent work showcase with uniform grid + optional Before/After pairs.
  *
- * To add more photos: drop the file in `/public` and add an entry below.
- *   - `src`     :  path served from /public  (e.g. "/2026-05-05.jpg")
- *   - `webp`    :  optional webp version for faster loading
- *   - `caption` :  short description shown on hover + in the lightbox
- *   - `tag`     :  optional category label (e.g. "Before", "After", "Mowing")
- *   - `span`    :  optional CSS class for grid emphasis ("tall" / "wide")
+ * Each item is either:
+ *   { type: 'single', src, webp?, label, tag? }
+ *   { type: 'pair', before: { src, webp? }, after: { src, webp? }, label }
+ *
+ * Singles render as labeled tiles (opens in lightbox on click).
+ * Pairs render as a draggable Before/After comparison slider.
+ *
+ * To add more: drop the file in `/public` and add an entry to `galleryItems`.
  */
-const photos = [
+const galleryItems = [
   {
+    type: 'single',
     src: '/2026-04-03.jpg',
     webp: '/2026-04-03.webp',
-    caption: 'Fresh cut — back garden, Fontwell',
+    label: 'Routine Bi-Weekly Cut & Edge',
     tag: 'Lawn Mowing',
-    span: 'tall',
   },
   {
+    type: 'single',
     src: '/2026-04-29.jpg',
     webp: '/2026-04-29.webp',
-    caption: 'Mid-job — overgrown lawn rescue',
+    label: 'Spring Lawn Revival',
     tag: 'Before',
   },
   {
+    type: 'single',
     src: '/2026-05-05.jpg',
-    caption: 'Striped finish — a happy customer',
+    label: 'Overgrown Garden Clearance',
     tag: 'After',
-    span: 'wide',
   },
-  // Add additional entries here, e.g.:
-  // { src: '/2026-05-10.jpg', caption: 'Front lawn, Walberton', tag: 'Edging' },
+  // Example pair entry — paste matching before/after photos into /public and use:
+  // {
+  //   type: 'pair',
+  //   before: { src: '/jobname-before.jpg' },
+  //   after:  { src: '/jobname-after.jpg'  },
+  //   label:  'Full Garden Reset, Walberton',
+  // },
 ];
 
 export default function Gallery() {
+  // Only `single` items are lightbox-able
+  const lightboxItems = galleryItems.filter((i) => i.type === 'single');
   const [activeIndex, setActiveIndex] = useState(null);
   const open = activeIndex !== null;
 
   const close = useCallback(() => setActiveIndex(null), []);
   const prev = useCallback(
-    () => setActiveIndex((i) => (i === 0 ? photos.length - 1 : i - 1)),
-    [],
+    () => setActiveIndex((i) => (i === 0 ? lightboxItems.length - 1 : i - 1)),
+    [lightboxItems.length],
   );
   const next = useCallback(
-    () => setActiveIndex((i) => (i === photos.length - 1 ? 0 : i + 1)),
-    [],
+    () => setActiveIndex((i) => (i === lightboxItems.length - 1 ? 0 : i + 1)),
+    [lightboxItems.length],
   );
 
-  // Keyboard navigation
   useEffect(() => {
     if (!open) return;
     const onKey = (e) => {
@@ -65,6 +75,12 @@ export default function Gallery() {
       document.body.style.overflow = '';
     };
   }, [open, close, prev, next]);
+
+  // Map original gallery index → lightbox index for click handler
+  const lightboxIndexOf = (origIndex) => {
+    const target = galleryItems[origIndex];
+    return lightboxItems.indexOf(target);
+  };
 
   return (
     <section id="gallery" className="bg-white section-padding">
@@ -89,30 +105,62 @@ export default function Gallery() {
           </p>
         </motion.div>
 
-        {/* Masonry-style grid */}
-        <div className="mt-12 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-3 md:gap-5 lg:grid-cols-4 [grid-auto-rows:140px] sm:[grid-auto-rows:180px] md:[grid-auto-rows:200px]">
-          {photos.map((photo, i) => (
-            <GalleryTile
-              key={photo.src}
-              photo={photo}
-              index={i}
-              onOpen={() => setActiveIndex(i)}
-            />
-          ))}
+        {/* Uniform grid — every tile is a 4:3 rectangle */}
+        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {galleryItems.map((item, i) => {
+            if (item.type === 'pair') {
+              return (
+                <motion.div
+                  key={`pair-${i}`}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-60px' }}
+                  transition={{ duration: 0.5, delay: i * 0.06 }}
+                >
+                  <BeforeAfterSlider
+                    before={item.before}
+                    after={item.after}
+                    label={item.label}
+                  />
+                </motion.div>
+              );
+            }
+            return (
+              <SingleTile
+                key={item.src}
+                item={item}
+                index={i}
+                onOpen={() => setActiveIndex(lightboxIndexOf(i))}
+              />
+            );
+          })}
         </div>
 
-        <p className="mt-8 text-center text-sm text-gray-500">
-          Tap any photo to view full size.
-        </p>
+        {/* Soft CTA below gallery */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5 }}
+          className="mt-14 flex flex-col items-center justify-center gap-3 rounded-2xl border border-emerald-100 bg-gradient-to-r from-emerald-50 to-green-50 p-6 text-center sm:flex-row sm:gap-6 sm:p-8 sm:text-left"
+        >
+          <p className="font-display text-lg font-bold text-emerald-900 sm:text-xl">
+            Want your lawn to look like this?
+          </p>
+          <a href="#contact" className="btn-primary">
+            Get a Free Quote
+            <ArrowRight className="h-5 w-5" />
+          </a>
+        </motion.div>
       </div>
 
       {/* Lightbox */}
       <AnimatePresence>
-        {open && (
+        {open && lightboxItems[activeIndex] && (
           <Lightbox
-            photo={photos[activeIndex]}
+            item={lightboxItems[activeIndex]}
             index={activeIndex}
-            total={photos.length}
+            total={lightboxItems.length}
             onClose={close}
             onPrev={prev}
             onNext={next}
@@ -125,15 +173,7 @@ export default function Gallery() {
 
 /* ------------------------------------------------------------------ */
 
-function GalleryTile({ photo, index, onOpen }) {
-  // Span helpers for masonry feel
-  const spanClasses =
-    photo.span === 'tall'
-      ? 'row-span-2'
-      : photo.span === 'wide'
-        ? 'col-span-2'
-        : '';
-
+function SingleTile({ item, index, onOpen }) {
   return (
     <motion.button
       type="button"
@@ -143,39 +183,45 @@ function GalleryTile({ photo, index, onOpen }) {
       viewport={{ once: true, margin: '-60px' }}
       transition={{ duration: 0.5, delay: index * 0.06, ease: 'easeOut' }}
       whileHover={{ y: -3 }}
-      className={`group relative overflow-hidden rounded-2xl bg-emerald-50 shadow-sm ring-1 ring-gray-100 transition-shadow hover:shadow-xl focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300 ${spanClasses}`}
-      aria-label={`Open photo: ${photo.caption}`}
+      className="group relative flex flex-col overflow-hidden rounded-2xl bg-emerald-50 text-left shadow-sm ring-1 ring-gray-100 transition-shadow hover:shadow-xl focus:outline-none focus-visible:ring-4 focus-visible:ring-emerald-300"
+      aria-label={`Open photo: ${item.label}`}
     >
-      <picture>
-        {photo.webp && <source srcSet={photo.webp} type="image/webp" />}
-        <img
-          src={photo.src}
-          alt={photo.caption}
-          loading={index < 2 ? 'eager' : 'lazy'}
-          fetchpriority={index === 0 ? 'high' : 'auto'}
-          decoding="async"
-          className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-        />
-      </picture>
+      {/* Uniform 4:3 image area */}
+      <div className="relative aspect-[4/3] w-full overflow-hidden">
+        <picture>
+          {item.webp && <source srcSet={item.webp} type="image/webp" />}
+          <img
+            src={item.src}
+            alt={item.label}
+            loading={index < 2 ? 'eager' : 'lazy'}
+            fetchpriority={index === 0 ? 'high' : 'auto'}
+            decoding="async"
+            className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            style={{ filter: 'brightness(1.05) contrast(1.05) saturate(1.18)' }}
+          />
+        </picture>
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/70 via-emerald-950/10 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+        {/* Subtle gradient for legibility of bottom info on hover */}
+        <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/30 via-transparent to-transparent" />
 
-      {/* Hover info */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 p-4 text-left opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-        {photo.tag && (
-          <span className="inline-block rounded-full bg-white/95 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-800">
-            {photo.tag}
+        {/* Tag pill (top-left, always visible) */}
+        {item.tag && (
+          <span className="absolute left-3 top-3 inline-block rounded-full bg-white/95 px-2.5 py-1 text-[10px] font-bold uppercase tracking-wide text-emerald-800 backdrop-blur-sm">
+            {item.tag}
           </span>
         )}
-        <p className="mt-2 text-sm font-semibold text-white drop-shadow-md">
-          {photo.caption}
-        </p>
+
+        {/* Zoom icon (top-right, hover-only) */}
+        <div className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/95 text-emerald-800 opacity-0 shadow-md transition-opacity duration-300 group-hover:opacity-100">
+          <ZoomIn className="h-4 w-4" />
+        </div>
       </div>
 
-      {/* Zoom icon */}
-      <div className="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-emerald-800 opacity-0 shadow-md transition-opacity duration-300 group-hover:opacity-100">
-        <ZoomIn className="h-4 w-4" />
+      {/* Always-visible label */}
+      <div className="border-t border-emerald-100 bg-white px-4 py-3">
+        <p className="font-display text-sm font-bold text-emerald-900">
+          {item.label}
+        </p>
       </div>
     </motion.button>
   );
@@ -183,7 +229,7 @@ function GalleryTile({ photo, index, onOpen }) {
 
 /* ------------------------------------------------------------------ */
 
-function Lightbox({ photo, index, total, onClose, onPrev, onNext }) {
+function Lightbox({ item, index, total, onClose, onPrev, onNext }) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -195,7 +241,6 @@ function Lightbox({ photo, index, total, onClose, onPrev, onNext }) {
       role="dialog"
       aria-modal="true"
     >
-      {/* Close */}
       <button
         type="button"
         onClick={onClose}
@@ -205,33 +250,35 @@ function Lightbox({ photo, index, total, onClose, onPrev, onNext }) {
         <X className="h-5 w-5" />
       </button>
 
-      {/* Prev / Next */}
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          onPrev();
-        }}
-        aria-label="Previous photo"
-        className="absolute left-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:left-8"
-      >
-        <ChevronLeft className="h-6 w-6" />
-      </button>
-      <button
-        type="button"
-        onClick={(e) => {
-          e.stopPropagation();
-          onNext();
-        }}
-        aria-label="Next photo"
-        className="absolute right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:right-8"
-      >
-        <ChevronRight className="h-6 w-6" />
-      </button>
+      {total > 1 && (
+        <>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onPrev();
+            }}
+            aria-label="Previous photo"
+            className="absolute left-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:left-8"
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              onNext();
+            }}
+            aria-label="Next photo"
+            className="absolute right-4 z-10 flex h-12 w-12 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-colors hover:bg-white/20 sm:right-8"
+          >
+            <ChevronRight className="h-6 w-6" />
+          </button>
+        </>
+      )}
 
-      {/* Image */}
       <motion.div
-        key={photo.src}
+        key={item.src}
         initial={{ opacity: 0, scale: 0.96 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.96 }}
@@ -240,23 +287,23 @@ function Lightbox({ photo, index, total, onClose, onPrev, onNext }) {
         className="relative mx-4 max-h-[85vh] max-w-5xl"
       >
         <picture>
-          {photo.webp && <source srcSet={photo.webp} type="image/webp" />}
+          {item.webp && <source srcSet={item.webp} type="image/webp" />}
           <img
-            src={photo.src}
-            alt={photo.caption}
+            src={item.src}
+            alt={item.label}
             className="max-h-[80vh] w-auto rounded-2xl object-contain shadow-2xl"
+            style={{ filter: 'brightness(1.05) contrast(1.05) saturate(1.18)' }}
           />
         </picture>
 
-        {/* Caption */}
         <div className="mt-4 text-center">
-          {photo.tag && (
+          {item.tag && (
             <span className="inline-block rounded-full bg-amber-400 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wide text-emerald-900">
-              {photo.tag}
+              {item.tag}
             </span>
           )}
           <p className="mt-2 text-sm font-medium text-white sm:text-base">
-            {photo.caption}
+            {item.label}
           </p>
           <p className="mt-1 text-xs text-emerald-200">
             {index + 1} / {total}
