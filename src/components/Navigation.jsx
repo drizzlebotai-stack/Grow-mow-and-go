@@ -21,6 +21,23 @@ export default function Navigation() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Bulletproof anchor navigation — doesn't depend on hash routing or
+  // the timing of the mobile menu's height animation.
+  const goTo = (href) => (e) => {
+    e.preventDefault();
+    setOpen(false);
+    // Small delay lets the menu close animation begin so the scroll
+    // measures the final layout, not the in-flight one.
+    setTimeout(() => {
+      const target = document.querySelector(href);
+      if (target) {
+        const headerOffset = 72; // sticky header height
+        const y = target.getBoundingClientRect().top + window.scrollY - headerOffset;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      }
+    }, 80);
+  };
+
   return (
     <header
       className={`sticky top-0 z-50 w-full transition-all duration-300 ${
@@ -55,6 +72,7 @@ export default function Navigation() {
             <li key={link.href}>
               <a
                 href={link.href}
+                onClick={goTo(link.href)}
                 className="text-sm font-semibold text-gray-700 transition-colors hover:text-emerald-800"
               >
                 {link.label}
@@ -96,13 +114,13 @@ export default function Navigation() {
             transition={{ duration: 0.2 }}
             className="lg:hidden"
           >
-            <ul className="container-section flex flex-col gap-2 border-t border-gray-100 bg-white py-4">
+            <ul className="container-section flex flex-col items-end gap-2 border-t border-gray-100 bg-white py-4">
               {links.map((link) => (
-                <li key={link.href}>
+                <li key={link.href} className="w-full">
                   <a
                     href={link.href}
-                    onClick={() => setOpen(false)}
-                    className="block rounded-xl px-3 py-3 text-base font-semibold text-gray-800 hover:bg-emerald-50 hover:text-emerald-800"
+                    onClick={goTo(link.href)}
+                    className="block rounded-xl px-4 py-3 text-right text-base font-semibold text-gray-800 hover:bg-emerald-50 hover:text-emerald-800 active:bg-emerald-50"
                   >
                     {link.label}
                   </a>

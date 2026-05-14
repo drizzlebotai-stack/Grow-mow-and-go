@@ -91,31 +91,33 @@ export default function Footer() {
               Quick Links
             </h4>
             <ul className="mt-4 space-y-2 text-sm">
-              <li>
-                <a href="#services" className="text-emerald-100 hover:text-amber-300">
-                  Services
-                </a>
-              </li>
-              <li>
-                <a href="#gallery" className="text-emerald-100 hover:text-amber-300">
-                  Gallery
-                </a>
-              </li>
-              <li>
-                <a href="#about" className="text-emerald-100 hover:text-amber-300">
-                  About
-                </a>
-              </li>
-              <li>
-                <a href="#testimonials" className="text-emerald-100 hover:text-amber-300">
-                  Reviews
-                </a>
-              </li>
-              <li>
-                <a href="#contact" className="text-emerald-100 hover:text-amber-300">
-                  Contact
-                </a>
-              </li>
+              {[
+                { label: 'Services', href: '#services' },
+                { label: 'Gallery', href: '#gallery' },
+                { label: 'About', href: '#about' },
+                { label: 'Reviews', href: '#testimonials' },
+                { label: 'Contact', href: '#contact' },
+              ].map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      const target = document.querySelector(link.href);
+                      if (target) {
+                        const y =
+                          target.getBoundingClientRect().top +
+                          window.scrollY -
+                          72;
+                        window.scrollTo({ top: y, behavior: 'smooth' });
+                      }
+                    }}
+                    className="text-emerald-100 hover:text-amber-300"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
             </ul>
           </div>
         </div>
