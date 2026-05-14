@@ -44,7 +44,7 @@ export default function Testimonials() {
           </p>
         </motion.div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-2 md:gap-6 lg:grid-cols-3">
           {reviews.map((r, i) => (
             <TestimonialCard
               key={r.author}

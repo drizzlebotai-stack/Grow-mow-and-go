@@ -22,7 +22,7 @@ const pillars = [
 export default function About() {
   return (
     <section id="about" className="section-padding">
-      <div className="container-section grid items-center gap-12 lg:grid-cols-2">
+      <div className="container-section grid grid-cols-1 items-center gap-10 md:gap-12 lg:grid-cols-2">
         <motion.div
           initial={{ opacity: 0, x: -24 }}
           whileInView={{ opacity: 1, x: 0 }}
@@ -61,7 +61,7 @@ export default function About() {
           </div>
         </motion.div>
 
-        <div className="grid gap-4 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           {pillars.map((p, i) => (
             <motion.div
               key={p.title}
@@ -69,8 +69,8 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
               transition={{ duration: 0.5, delay: i * 0.1, ease: 'easeOut' }}
-              className={`rounded-2xl border border-gray-100 bg-white p-6 shadow-sm transition-shadow hover:shadow-md ${
-                i === 0 ? 'sm:col-span-2' : ''
+              className={`rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-shadow hover:shadow-md md:p-6 ${
+                i === 0 ? 'md:col-span-2' : ''
               }`}
             >
               <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-800 text-white">

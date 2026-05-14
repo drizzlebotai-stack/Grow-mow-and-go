@@ -55,7 +55,7 @@ export default function Services() {
           </p>
         </motion.div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-2 md:gap-6 lg:grid-cols-4">
           {services.map((s, i) => (
             <motion.article
               key={s.title}
@@ -76,7 +76,7 @@ export default function Services() {
               <p className="mt-2 flex-1 text-sm text-gray-600">{s.body}</p>
               <a
                 href="#contact"
-                className="mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-green-600 transition-colors group-hover:text-emerald-800"
+                className="mt-5 inline-flex min-h-[44px] items-center gap-1.5 text-sm font-semibold text-green-600 transition-colors group-hover:text-emerald-800"
               >
                 Get a quote
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />

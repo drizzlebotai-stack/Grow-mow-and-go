@@ -9,7 +9,7 @@ export default function Footer() {
   return (
     <footer className="bg-emerald-900 text-emerald-50">
       <div className="container-section py-14">
-        <div className="grid gap-10 md:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 md:gap-10">
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2">
@@ -64,7 +64,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-3 text-sm">
               <li>
                 <a
-                  href="tel:07754673917"
+                  href="tel:+447754673917"
                   className="inline-flex items-center gap-2 text-emerald-100 hover:text-amber-300"
                 >
                   <Phone className="h-4 w-4" /> 07754 673917

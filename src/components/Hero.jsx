@@ -86,16 +86,16 @@ function DefaultHero() {
           </span>
         </motion.div>
 
-        {/* CTAs */}
+        {/* CTAs — full width stacked on mobile, side-by-side on desktop */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.35 }}
-          className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row"
+          className="mt-8 flex w-full flex-col items-stretch justify-center gap-3 sm:mt-10 md:flex-row md:items-center"
         >
           <motion.a
             href="#contact"
-            className="btn-primary w-full sm:w-auto"
+            className="btn-primary w-full md:w-auto"
             animate={{ y: [0, -8, 0] }}
             transition={{
               duration: 2.2,
@@ -109,7 +109,11 @@ function DefaultHero() {
             Get a Free Quote
             <ArrowRight className="h-5 w-5" />
           </motion.a>
-          <a href="tel:07754673917" className="btn-secondary w-full sm:w-auto">
+          <a
+            href="tel:+447754673917"
+            className="btn-secondary w-full md:w-auto"
+            aria-label="Call 07754 673917"
+          >
             <Phone className="h-5 w-5" />
             Call 07754 673917
           </a>

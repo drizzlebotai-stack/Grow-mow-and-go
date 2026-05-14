@@ -106,7 +106,7 @@ export default function Gallery() {
         </motion.div>
 
         {/* Uniform grid — every tile is a 4:3 rectangle */}
-        <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 gap-5 md:mt-12 md:grid-cols-2 lg:grid-cols-3">
           {galleryItems.map((item, i) => {
             if (item.type === 'pair') {
               return (

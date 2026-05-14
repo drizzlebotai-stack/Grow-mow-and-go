@@ -8,7 +8,7 @@ export default function App() {
   return (
     <div className="flex min-h-screen flex-col bg-brand-bg text-gray-900">
       <Navigation />
-      <main className="flex-1 pb-24 lg:pb-0">
+      <main className="flex-1 pb-24 md:pb-0">
         <Routes>
           <Route path="/" element={<Home />} />
           {/* Add additional routes here as the site grows */}

@@ -111,8 +111,8 @@ export default function BeforeAfterSlider({ before, after, label, initial = 50 }
           className="pointer-events-none absolute inset-y-0 w-0.5 bg-white shadow-lg"
           style={{ left: `${pct}%`, transform: 'translateX(-50%)' }}
         >
-          <div className="absolute top-1/2 left-1/2 flex h-10 w-10 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-emerald-800 bg-white shadow-xl">
-            <Move className="h-4 w-4 text-emerald-800" />
+          <div className="absolute top-1/2 left-1/2 flex h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border-2 border-emerald-800 bg-white shadow-xl">
+            <Move className="h-5 w-5 text-emerald-800" />
           </div>
         </div>
       </div>
