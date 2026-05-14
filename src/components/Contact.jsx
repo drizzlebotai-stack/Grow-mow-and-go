@@ -83,14 +83,14 @@ export default function Contact() {
               href="mailto:hello@growmowandgo.co.uk"
               className="group flex items-center gap-4 rounded-2xl border border-emerald-100 bg-white p-4 transition-shadow hover:shadow-md"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-400 text-emerald-900">
+              <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-amber-400 text-emerald-900">
                 <Mail className="h-5 w-5" />
               </span>
-              <div>
+              <div className="min-w-0 flex-1">
                 <div className="text-xs font-semibold uppercase tracking-wide text-gray-500">
                   Email
                 </div>
-                <div className="font-display text-base font-bold text-emerald-900 group-hover:text-green-600">
+                <div className="break-all font-display text-sm font-bold text-emerald-900 group-hover:text-green-600 xs:text-base">
                   hello@growmowandgo.co.uk
                 </div>
               </div>

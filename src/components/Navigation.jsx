@@ -38,13 +38,13 @@ export default function Navigation() {
             setOpen(false);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex items-center gap-2"
+          className="flex min-w-0 flex-shrink items-center gap-2"
           aria-label="Back to top"
         >
-          <span className="flex h-10 w-10 items-center justify-center rounded-2xl bg-emerald-800 text-white">
-            <Leaf className="h-5 w-5" />
+          <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-emerald-800 text-white sm:h-10 sm:w-10">
+            <Leaf className="h-4 w-4 sm:h-5 sm:w-5" />
           </span>
-          <span className="font-display text-lg font-extrabold text-emerald-800 sm:text-xl">
+          <span className="truncate font-display text-sm font-extrabold text-emerald-800 xs:text-base sm:text-xl">
             Grow, Mow <span className="text-green-500">&amp;</span> Go
           </span>
         </Link>
@@ -64,13 +64,13 @@ export default function Navigation() {
         </ul>
 
         {/* Phone — always visible (even on mobile, per spec) */}
-        <div className="flex items-center gap-2 sm:gap-3">
+        <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           <a
             href="tel:07754673917"
-            className="inline-flex items-center gap-2 rounded-2xl bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-md shadow-green-500/30 transition-all hover:bg-green-600 sm:px-5 sm:py-2.5"
+            className="inline-flex items-center gap-1.5 rounded-2xl bg-green-500 px-3 py-2 text-sm font-semibold text-white shadow-md shadow-green-500/30 transition-all hover:bg-green-600 sm:gap-2 sm:px-5 sm:py-2.5"
             aria-label="Call Grow, Mow and Go on 07754 673917"
           >
-            <Phone className="h-4 w-4" />
+            <Phone className="h-4 w-4 shrink-0" />
             <span className="hidden sm:inline">07754 673917</span>
             <span className="sm:hidden">Call</span>
           </a>
